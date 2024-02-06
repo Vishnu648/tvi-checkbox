@@ -321,6 +321,12 @@ array.map((c, i) => {
   checkbox.setAttribute("type", "checkbox");
   checkbox.setAttribute("id", headingId);
 
+  checkbox.addEventListener("click",()=> myFunction(checkbox));
+
+  function myFunction(c) {
+    console.log(c)
+  }
+
   let title = document.createElement("label");
   title.setAttribute("for", headingId);
   headingId++;
@@ -341,7 +347,7 @@ array.map((c, i) => {
 
   let regtypeLabel = document.createElement("label");
   regtypeLabel.setAttribute("for", c.regtype);
-  regtypeLabel.textContent = subHeading;
+  regtypeLabel.textContent = c.regtype_description;
 
   //   !printedHeadings.includes(subHeading[0]) ? elements.appendChild(title)  : null;
   if (!printedHeadings.includes(subHeading[0])) {
@@ -356,3 +362,5 @@ array.map((c, i) => {
   elements.appendChild(regtypeLabel);
   elements.appendChild(newLine);
 });
+
+let check1=document.getElementById('0')
