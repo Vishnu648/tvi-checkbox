@@ -319,7 +319,7 @@ let headingId = 0;
 array.map((c, i) => {
   let checkbox = document.createElement("input");
   checkbox.setAttribute("type", "checkbox");
-  checkbox.setAttribute("id", headingId);
+//   checkbox.setAttribute("id", subHeading[0]);
 
   checkbox.addEventListener("click",()=> myFunction(checkbox));
 
@@ -328,10 +328,13 @@ array.map((c, i) => {
   }
 
   let title = document.createElement("label");
-  title.setAttribute("for", headingId);
+//   title.setAttribute("for", subHeading[0]);
   headingId++;
   let subHeading = c.regtype_description.split(" ");
   title.textContent = subHeading[0];
+  checkbox.setAttribute("id", subHeading[0]);
+  title.setAttribute("for", subHeading[0]);
+
   {
     !headings.includes(subHeading[0]) ? headings.push(subHeading[0]) : "";
   }
