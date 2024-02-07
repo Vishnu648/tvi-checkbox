@@ -311,71 +311,53 @@ const array = [
   },
 ];
 
-let elements = document.getElementById("checkbox");
-let headings = [];
-let printedHeadings = [];
-let headingId = 0;
+let x = document.getElementById("checkbox");
+let headObject = {};
+let i = 0;
+isChecked = false;
+array.map((arr) => {
+  let checkbox1 = document.createElement("input");
+  let head1 = document.createElement("label");
+  let headWord1 = arr.regtype_description.split(" ")[0];
+  let headWord = headWord1.toUpperCase();
+  i++;
 
-array.map((c, i) => {
-  let checkbox = document.createElement("input");
-  checkbox.setAttribute("type", "checkbox");
-  checkbox.addEventListener("click", () => myFunction(checkbox));
+  if (!headObject[headWord]) {
+    headObject[headWord] = [];
+    var breakTag1 = document.createElement("br");
+    x.appendChild(breakTag1);
 
-  let title = document.createElement("label");
-  headingId++;
-  let subHeading = c.regtype_description.split(" ");
-  checkbox.setAttribute("id", subHeading[0]);
-  checkbox.setAttribute("value", subHeading[0]);
-  title.setAttribute("for", subHeading[0]);
+    let checkbox = document.createElement("input");
+    checkbox.setAttribute("type", "checkbox");
+    checkbox.setAttribute("id", headWord);
+    x.appendChild(checkbox);
 
-  // {
-  let newLine1 = document.createElement("br");
-  if (!headings.includes(subHeading[0])) {
-    headings.push(subHeading[0]);
-    elements.appendChild(checkbox);
-    elements.appendChild(title);
-    elements.appendChild(newLine1);
-    title.textContent = subHeading[0];
+    let head = document.createElement("label");
+    head.setAttribute("for", headWord);
+    head.textContent = headWord;
+    x.appendChild(head);
+    head.style.fontSize = "20px";
+    head.style.fontWeight = "bold";
+
+    let breakTag = document.createElement("br");
+    x.appendChild(breakTag);
+    checkbox.addEventListener("click", myFunction);
+    function myFunction() {
+      isChecked = !isChecked;
+      headObject[headWord].map((heading) => {
+        heading.checked = isChecked;
+      });
+    }
   }
 
-  // }
-  //   title.style.display = "inline";
-  title.style.fontWeight = "bold";
-  title.style.fontSize = "20px";
+  checkbox1.setAttribute("type", "checkbox");
+  checkbox1.setAttribute("id", arr.regtype);
+  x.appendChild(checkbox1);
 
-  let newLine = document.createElement("br");
-
-  let regtype = document.createElement("input");
-  regtype.setAttribute("id", c.regtype);
-  regtype.setAttribute("type", "checkbox");
-
-  let regtypeLabel = document.createElement("label");
-  regtypeLabel.setAttribute("for", c.regtype);
-  regtypeLabel.textContent = c.regtype_description;
-
-  // if (!printedHeadings.includes(subHeading[0])) {
-  // elements.appendChild(checkbox);
-  // elements.appendChild(title);
-  // elements.appendChild(newLine1);
-  // } else {
-  // }
-  printedHeadings.push(subHeading[0]);
-  elements.appendChild(regtype);
-  elements.appendChild(regtypeLabel);
-  elements.appendChild(newLine);
-
-  function myFunction(c) {
-    let clickedId = c.getAttribute("id");
-    let same = [];
-
-    array.map((che) => {
-      let firstWord = che.regtype_description.split(" ")[0];
-      if (firstWord == clickedId) {
-        regtypeLabel.style.color = "red";
-        console.log(firstWord);
-      }
-    });
-  }
+  head1.setAttribute("for", arr.regtype);
+  head1.textContent = arr.regtype_description;
+  x.appendChild(head1);
+  headObject[headWord].push(checkbox1);
+  let breakTag = document.createElement("br");
+  x.appendChild(breakTag);
 });
-
-let check1 = document.getElementById("0");
