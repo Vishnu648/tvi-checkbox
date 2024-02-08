@@ -311,71 +311,62 @@ const array = [
   },
 ];
 
-let elements = document.getElementById("checkbox");
-let headings = [];
-let printedHeadings = [];
-let headingId = 0;
+array.sort((a, b) => {
+  const larA = a.regtype_description.toUpperCase();
+  const larB = b.regtype_description.toUpperCase();
 
-array.map((c, i) => {
-  let checkbox = document.createElement("input");
-  checkbox.setAttribute("type", "checkbox");
-  checkbox.addEventListener("click", () => myFunction(checkbox));
-
-  let title = document.createElement("label");
-  headingId++;
-  let subHeading = c.regtype_description.split(" ");
-  checkbox.setAttribute("id", subHeading[0]);
-  checkbox.setAttribute("value", subHeading[0]);
-  title.setAttribute("for", subHeading[0]);
-
-  // {
-  let newLine1 = document.createElement("br");
-  if (!headings.includes(subHeading[0])) {
-    headings.push(subHeading[0]);
-    elements.appendChild(checkbox);
-    elements.appendChild(title);
-    elements.appendChild(newLine1);
-    title.textContent = subHeading[0];
-  }
-
-  // }
-  //   title.style.display = "inline";
-  title.style.fontWeight = "bold";
-  title.style.fontSize = "20px";
-
-  let newLine = document.createElement("br");
-
-  let regtype = document.createElement("input");
-  regtype.setAttribute("id", c.regtype);
-  regtype.setAttribute("type", "checkbox");
-
-  let regtypeLabel = document.createElement("label");
-  regtypeLabel.setAttribute("for", c.regtype);
-  regtypeLabel.textContent = c.regtype_description;
-
-  // if (!printedHeadings.includes(subHeading[0])) {
-  // elements.appendChild(checkbox);
-  // elements.appendChild(title);
-  // elements.appendChild(newLine1);
-  // } else {
-  // }
-  printedHeadings.push(subHeading[0]);
-  elements.appendChild(regtype);
-  elements.appendChild(regtypeLabel);
-  elements.appendChild(newLine);
-
-  function myFunction(c) {
-    let clickedId = c.getAttribute("id");
-    let same = [];
-
-    array.map((che) => {
-      let firstWord = che.regtype_description.split(" ")[0];
-      if (firstWord == clickedId) {
-        regtypeLabel.style.color = "red";
-        console.log(firstWord);
-      }
-    });
-  }
+  if (larA < larB) return -1;
+  if (larA > larB) return 1;
+  return 0;
 });
 
-let check1 = document.getElementById("0");
+let container = document.getElementById("checkbox");
+
+let sameObject = {};
+
+array.map((a) => {
+  let heading = a.regtype_description.split(" ")[0].toUpperCase();
+
+  let subCheck = document.createElement("input");
+  subCheck.setAttribute("type", "checkbox");
+  subCheck.setAttribute("id", heading);
+
+  let subLabel = document.createElement("label");
+  subLabel.setAttribute("for", heading);
+  subLabel.textContent = a.regtype_description;
+
+  let newLine = document.createElement("br");
+  container.appendChild(newLine);
+
+  if (!sameObject[heading]) {
+    sameObject[heading] = [];
+    var newLinee = document.createElement("br");
+    container.appendChild(newLinee);
+
+    headCheck = document.createElement("input");
+    headCheck.setAttribute("type", "checkbox");
+    headCheck.setAttribute("id", heading);
+    container.appendChild(headCheck);
+
+    headLabel = document.createElement("label");
+    headLabel.setAttribute("for", heading);
+    headLabel.textContent = heading;
+    headLabel.style.fontSize = "20px";
+    headLabel.style.fontWeight = "bold";
+    container.appendChild(headLabel);
+
+    let breakTag = document.createElement("br");
+    container.appendChild(breakTag);
+  }
+
+  headCheck.addEventListener("click", myFunction);
+  function myFunction() {
+    sameObject[heading].map((heading) => {
+      heading.checked = this.checked;
+    });
+  }
+
+  container.appendChild(subCheck);
+  container.appendChild(subLabel);
+  sameObject[heading].push(subCheck);
+});
